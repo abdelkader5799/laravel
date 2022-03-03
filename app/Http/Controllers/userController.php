@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use app\student;
 
 use Illuminate\Http\Request;
 
@@ -9,7 +10,7 @@ class userController extends Controller
     //
     public function create()
         {
-            return view('create');
+            return view('students.create');
         }
         public function store(Request $request)
         {
@@ -17,17 +18,10 @@ class userController extends Controller
 
           "title"=>"required|string",
           "content"=>"required|min:50",
-          "image"=>"required|image"
 
             ]);
+            $data= $request->only(['title', 'content']);
         }
-public function loadData()
-{
-    $request=new  Request ;
-    $data= $request->only(['title', 'content','image']);
-   session()->flash("Message","$data");
 
-
-}
 }
 

@@ -1,8 +1,8 @@
 <?php
-
+use App\Http\Controllers\taskController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userController;
-
+use App\Http\Controllers\studentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,20 +18,26 @@ use App\Http\Controllers\userController;
 Route::get('/', function () {
     return view('welcome');
 });
-// Route::post('create',[userController::class,'create']);
-
-// Route::post('Store',[userController::class,'store']);
-// route::get("mahmoud/{id}",function ()
-// {
-//   echo "hallo000000"."<br>";
-// })->where(['id'=>'[1-9]+']);
-// route::post('/store',function()
-// {
-// echo "store";
-// });
-// route::view('/mahmoud','create');
-route::get('create',[userController::class,'create']);
-route::POST('Store',[userController::class,'store']);
-route::get('blog',[userController::class,'loadData']);
 
 
+
+
+
+
+
+Route::middleware(['checkLogin'])->group(function(){
+
+# Student Routes .......
+Route::get('Student/',[studentController::class,'index']);
+Route::get('Student/Create',[studentController::class,'create']);
+Route::post('Student/Store',[studentController::class,'Store']);
+Route::get('Student/edit/{id}',[studentController::class,'edit']);
+Route::put('Student/update/{id}',[studentController::class,'update']);
+Route::get("Student/LogOut",[studentController::class,'LogOut']);
+
+Route::resource('task',taskController::class);
+
+});
+
+Route::get("Student/Login",[studentController::class,'login']);
+Route::post("Student/doLogin",[studentController::class,'doLogin']);
